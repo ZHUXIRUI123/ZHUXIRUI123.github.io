@@ -4,18 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>12355青年服务站 - 预约系统</title>
+  <!-- 引入Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome -->
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
+  <!-- 配置Tailwind -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: '#1E88E5',
-            secondary: '#26A69A',
-            accent: '#FFA000',
+            primary: '#1E88E5', // 主色调：蓝色
+            secondary: '#26A69A', // 辅助色：青色
+            accent: '#FFA000', // 强调色：橙色
             dark: '#263238',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
           },
         },
       }
@@ -24,27 +30,30 @@
   
   <style type="text/tailwindcss">
     @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
       .bg-pattern {
         background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e88e5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       }
       .card-shadow {
-        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
       }
-    }
-    /* 修复iframe样式冲突 */
-    iframe {
-      border: none !important;
-      overflow: hidden !important;
+      .transition-custom {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
     }
   </style>
 </head>
 
 <body class="bg-pattern bg-gray-50 min-h-screen font-sans">
+  <!-- 页面容器 -->
   <div class="container mx-auto px-4 py-8 max-w-3xl">
     
-    <!-- 介绍页 -->
-    <div id="intro-page" class="block">
-      <div class="bg-white rounded-2xl p-8 card-shadow mb-8 transform hover:scale-[1.01] transition-all">
+    <!-- 介绍页面（保留原内容不变） -->
+    <div id="intro-page" class="transition-custom">
+      <div class="bg-white rounded-2xl p-8 card-shadow mb-8 transform hover:scale-[1.01] transition-custom">
+        <!-- 标题区域 -->
         <div class="text-center mb-8">
           <div class="inline-block p-3 bg-primary/10 rounded-full mb-4">
             <i class="fa fa-heart-o text-3xl text-primary"></i>
@@ -52,6 +61,8 @@
           <h1 class="text-[clamp(1.8rem,5vw,2.5rem)] font-bold text-dark mb-3">12355青年服务站</h1>
           <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
         </div>
+        
+        <!-- 简介内容 -->
         <div class="space-y-4 text-gray-600 mb-8">
           <p class="text-lg leading-relaxed">
             12355青年服务站是面向广大青少年提供多元化服务的公益平台，致力于为青少年健康成长保驾护航。
@@ -60,6 +71,8 @@
             我们通过专业的服务团队和丰富的资源，帮助青少年解决成长过程中遇到的各类问题，欢迎前来咨询交流。
           </p>
         </div>
+        
+        <!-- 联系信息 -->
         <div class="bg-gray-50 p-4 rounded-xl mb-8">
           <div class="flex items-center text-gray-600 mb-2">
             <i class="fa fa-phone-square text-primary mr-3"></i>
@@ -69,90 +82,20 @@
             <i class="fa fa-clock-o text-primary mr-3 mt-1.5"></i>
             <span>
               线上咨询时间：每日 8:30-20:00<br>
-              线下服务时间：每日 9:00-12:00、14:00-18:00；通过预约定具体时间、地点
+              线下服务时间：每日9:00-12:00、14:00-18:00；通过预约确定具体时间、地点
             </span>
           </div>
         </div>
+        
+        <!-- 开始预约按钮（改为跳转链接） -->
         <div class="text-center">
-          <button id="start-btn" class="bg-accent hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+          <a href="https://docs.qq.com/form/page/DZXRIbXFIaEFXTVNi" target="_blank" class="bg-accent hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-custom focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50 inline-block">
             开始预约 <i class="fa fa-arrow-right ml-2"></i>
-          </button>
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- 预约表单页（仅嵌入表单，移除冲突样式） -->
-    <div id="form-page" class="hidden">
-      <div class="bg-white rounded-2xl p-6 card-shadow transform hover:scale-[1.01] transition-all">
-        <div class="text-center mb-4">
-          <h2 class="text-[clamp(1.5rem,4vw,2rem)] font-bold text-dark mb-2">服务预约</h2>
-          <p class="text-gray-500">请填写以下信息完成预约</p>
-        </div>
-        
-        <!-- 嵌入表单（调整高度适配内容） -->
-        <iframe height="620" src="http://jsform3.com/web/formview/691d314175a03c61c8021a8b?_ed=1" 
-          allowTransparency="true" frameborder="0" style="width:100%;"></iframe>
-        
-        <!-- 返回按钮 -->
-        <div class="pt-4 text-center">
-          <button type="button" id="back-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-5 rounded-lg transition-all">
-            <i class="fa fa-arrow-left mr-2"></i> 返回
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 成功页 -->
-    <div id="success-page" class="hidden">
-      <div class="bg-white rounded-2xl p-8 card-shadow text-center transform hover:scale-[1.01] transition-all">
-        <div class="inline-block p-6 bg-green-100 rounded-full mb-6">
-          <i class="fa fa-check text-5xl text-green-500"></i>
-        </div>
-        <h2 class="text-[clamp(1.5rem,4vw,2rem)] font-bold text-dark mb-4">预约成功！</h2>
-        <p class="text-gray-600 text-lg mb-8">
-          感谢您的预约，我们会尽快与您联系确认详情。<br>
-          请保持手机畅通，注意查收通知。
-        </p>
-        <button id="new-reservation-btn" class="bg-primary hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all">
-          新增预约 <i class="fa fa-plus ml-2"></i>
-        </button>
-      </div>
-    </div>
   </div>
-
-  <script>
-    const introPage = document.getElementById('intro-page');
-    const formPage = document.getElementById('form-page');
-    const successPage = document.getElementById('success-page');
-    
-    // 监听提交后跳转
-    function checkHash() {
-      if (window.location.hash === '#success') {
-        formPage.classList.add('hidden');
-        successPage.classList.remove('hidden');
-        window.location.hash = '';
-      }
-    }
-    checkHash();
-    window.addEventListener('hashchange', checkHash);
-    
-    // 按钮事件
-    document.getElementById('start-btn').addEventListener('click', () => {
-      introPage.classList.add('hidden');
-      formPage.classList.remove('hidden');
-      window.scrollTo({ top: 0 });
-    });
-    document.getElementById('back-btn').addEventListener('click', () => {
-      formPage.classList.add('hidden');
-      introPage.classList.remove('hidden');
-      window.scrollTo({ top: 0 });
-    });
-    document.getElementById('new-reservation-btn').addEventListener('click', () => {
-      successPage.classList.add('hidden');
-      formPage.classList.remove('hidden');
-      window.scrollTo({ top: 0 });
-    });
-  </script>
 </body>
 </html>
-
