@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>12355青年服务站 - 预约系统</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- 配置Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1E88E5', // 主色调：蓝色
+            secondary: '#26A69A', // 辅助色：青色
+            accent: '#FFA000', // 强调色：橙色
+            dark: '#263238',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .bg-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e88e5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .card-shadow {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      }
+      .transition-custom {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-pattern bg-gray-50 min-h-screen font-sans">
+  <!-- 页面容器 -->
+  <div class="container mx-auto px-4 py-8 max-w-3xl">
+    
+    <!-- 介绍页面 -->
+    <div id="intro-page" class="transition-custom">
+      <div class="bg-white rounded-2xl p-8 card-shadow mb-8 transform hover:scale-[1.01] transition-custom">
+        <!-- 标题区域 -->
+        <div class="text-center mb-8">
+          <div class="inline-block p-3 bg-primary/10 rounded-full mb-4">
+            <i class="fa fa-heart-o text-3xl text-primary"></i>
+          </div>
+          <h1 class="text-[clamp(1.8rem,5vw,2.5rem)] font-bold text-dark mb-3">12355青年服务站</h1>
+          <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+        </div>
+        
+        <!-- 简介内容 -->
+        <div class="space-y-4 text-gray-600 mb-8">
+          <p class="text-lg leading-relaxed">
+            12355青年服务站是面向广大青少年提供多元化服务的公益平台，致力于为青少年健康成长保驾护航。
+          </p>
+          <p class="text-lg leading-relaxed">
+            我们通过专业的服务团队和丰富的资源，帮助青少年解决成长过程中遇到的各类问题，欢迎前来咨询交流。
+          </p>
+        </div>
+        
+        <!-- 联系信息（调整了时间图标位置） -->
+        <div class="bg-gray-50 p-4 rounded-xl mb-8">
+          <div class="flex items-center text-gray-600 mb-2">
+            <i class="fa fa-phone-square text-primary mr-3"></i>
+            <span>服务热线：12355</span>
+          </div>
+          <div class="flex items-center text-gray-600">
+            <!-- 图标位置调整为与两行文字中间对齐 -->
+            <i class="fa fa-clock-o text-primary mr-3 mt-1.5"></i>
+            <span>
+              线上服务时间：每日 8:30-20:00<br>
+              线下服务时间：周一至周五9:00-12:00、14:00-18:00；周末及节假日提供预约制服务
+            </span>
+          </div>
+        </div>
+        
+        <!-- 开始预约按钮 -->
+        <div class="text-center">
+          <button id="start-btn" class="bg-accent hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-custom focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50">
+            开始预约 <i class="fa fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 预约表单页面 (默认隐藏，已删除日期、时间、地点选项) -->
+    <div id="form-page" class="hidden transition-custom">
+      <div class="bg-white rounded-2xl p-8 card-shadow transform hover:scale-[1.01] transition-custom">
+        <!-- 表单标题 -->
+        <div class="text-center mb-8">
+          <div class="inline-block p-3 bg-secondary/10 rounded-full mb-4">
+            <i class="fa fa-calendar-check-o text-3xl text-secondary"></i>
+          </div>
+          <h2 class="text-[clamp(1.5rem,4vw,2rem)] font-bold text-dark mb-3">服务预约</h2>
+          <p class="text-gray-500">请填写以下信息完成预约</p>
+        </div>
+        
+        <!-- 预约表单 -->
+        <form id="reservation-form" class="space-y-6">
+          <!-- 个人基本信息 -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="name" class="block text-gray-700 font-medium mb-2">姓名 <span class="text-red-500">*</span></label>
+              <input type="text" id="name" name="name" required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-custom outline-none"
+                placeholder="请输入您的姓名">
+            </div>
+            
+            <div>
+              <label for="phone" class="block text-gray-700 font-medium mb-2">联系电话 <span class="text-red-500">*</span></label>
+              <input type="tel" id="phone" name="phone" required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-custom outline-none"
+                placeholder="请输入您的手机号码">
+            </div>
+          </div>
+          
+          <div>
+            <label for="age" class="block text-gray-700 font-medium mb-2">年龄</label>
+            <input type="number" id="age" name="age" min="12" max="35"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-custom outline-none"
+              placeholder="请输入您的年龄">
+          </div>
+          
+          <!-- 服务类型 -->
+          <div>
+            <label for="service-type" class="block text-gray-700 font-medium mb-2">服务类型 <span class="text-red-500">*</span></label>
+            <select id="service-type" name="service-type" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-custom outline-none appearance-none bg-white"
+              style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg width=\"20\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z\" fill=\"%23333\"/></svg>'); background-repeat: no-repeat; background-position: right 10px center;">
+              <option value="">请选择服务类型</option>
+              <option value="psychological">心理健康支持</option>
+              <option value="legal">法律权益保障</option>
+              <option value="growth">成长与发展指导</option>
+              <option value="crisis">危机干预与个案转介</option>
+            </select>
+          </div>
+          
+          <div>
+            <label for="description" class="block text-gray-700 font-medium mb-2">咨询描述</label>
+            <textarea id="description" name="description" rows="3"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-custom outline-none resize-none"
+              placeholder="请简要描述您需要咨询的问题（选填）"></textarea>
+          </div>
+          
+          <!-- 提交按钮 -->
+          <div class="pt-4 flex flex-col sm:flex-row gap-4">
+            <button type="button" id="back-btn" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-6 rounded-lg transition-custom">
+              <i class="fa fa-arrow-left mr-2"></i> 返回
+            </button>
+            
+            <button type="submit" class="flex-1 bg-secondary hover:bg-teal-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-custom focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50">
+              提交预约 <i class="fa fa-check ml-2"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <!-- 预约成功页面 -->
+    <div id="success-page" class="hidden transition-custom">
+      <div class="bg-white rounded-2xl p-8 card-shadow text-center transform hover:scale-[1.01] transition-custom">
+        <div class="inline-block p-6 bg-green-100 rounded-full mb-6">
+          <i class="fa fa-check text-5xl text-green-500"></i>
+        </div>
+        
+        <h2 class="text-[clamp(1.5rem,4vw,2rem)] font-bold text-dark mb-4">预约成功！</h2>
+        
+        <p class="text-gray-600 text-lg mb-8">
+          感谢您的预约，我们会尽快与您联系确认详情。<br>
+          请保持手机畅通，注意查收通知。
+        </p>
+        
+        <button id="new-reservation-btn" class="bg-primary hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-custom focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+          新增预约 <i class="fa fa-plus ml-2"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // 页面元素
+    const introPage = document.getElementById('intro-page');
+    const formPage = document.getElementById('form-page');
+    const successPage = document.getElementById('success-page');
+    const reservationForm = document.getElementById('reservation-form');
+    
+    // 按钮事件
+    document.getElementById('start-btn').addEventListener('click', () => {
+      introPage.classList.add('hidden');
+      formPage.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    document.getElementById('back-btn').addEventListener('click', () => {
+      formPage.classList.add('hidden');
+      introPage.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    document.getElementById('new-reservation-btn').addEventListener('click', () => {
+      successPage.classList.add('hidden');
+      formPage.classList.remove('hidden');
+      reservationForm.reset();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // 表单提交处理
+    reservationForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // 收集表单数据
+      const formData = new FormData(reservationForm);
+      const data = Object.fromEntries(formData.entries());
+      data.reservationTime = new Date().toLocaleString(); // 记录提交时间
+      
+      // 控制台输出数据
+      console.log('预约信息:', data);
+      
+      // 模拟提交延迟
+      const submitButton = reservationForm.querySelector('button[type="submit"]');
+      const originalText = submitButton.innerHTML;
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<i class="fa fa-circle-o-notch fa-spin mr-2"></i> 提交中...';
+      
+      setTimeout(() => {
+        formPage.classList.add('hidden');
+        successPage.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // 重置按钮状态
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalText;
+        
+        // 发送数据到腾讯文档（需替换为你的收集表链接）
+        const tencentFormUrl = "替换为你的腾讯文档收集表链接";
+        const tencentFormData = new FormData();
+        // 字段名必须与腾讯文档收集表的问题标题完全一致
+        tencentFormData.append("姓名", data.name);
+        tencentFormData.append("联系电话", data.phone);
+        tencentFormData.append("年龄", data.age || "未填写");
+        tencentFormData.append("服务类型", data["service-type"]);
+        tencentFormData.append("咨询描述", data.description || "无");
+        tencentFormData.append("提交时间", data.reservationTime);
+        
+        // 提交到腾讯文档
+        fetch(tencentFormUrl, {
+          method: "POST",
+          body: tencentFormData
+        });
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
