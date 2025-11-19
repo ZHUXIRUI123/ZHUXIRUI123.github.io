@@ -255,7 +255,6 @@
         tencentFormData.append("年龄", data.age || "未填写");
         tencentFormData.append("服务类型", data["service-type"]);
         tencentFormData.append("咨询描述", data.description || "无");
-        tencentFormData.append("提交时间", data.reservationTime);
         
         // 提交到腾讯文档
         fetch(tencentFormUrl, {
@@ -268,3 +267,4 @@
 </body>
 
 </html>
+
