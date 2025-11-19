@@ -96,11 +96,11 @@
       </div>
     </div>
     
-    <!-- 预约表单页面 -->
+    <!-- 预约表单页面（仅显示嵌入的表单） -->
     <div id="form-page" class="hidden transition-custom">
       <div class="bg-white rounded-2xl p-8 card-shadow transform hover:scale-[1.01] transition-custom">
         <!-- 表单标题 -->
-        <div class="text-center mb-8">
+        <div class="text-center mb-6">
           <div class="inline-block p-3 bg-secondary/10 rounded-full mb-4">
             <i class="fa fa-calendar-check-o text-3xl text-secondary"></i>
           </div>
@@ -108,64 +108,16 @@
           <p class="text-gray-500">请填写以下信息完成预约</p>
         </div>
         
-        <!-- 预约表单（已匹配你的收集表标题 + 腾讯文档收集链接） -->
-        <form id="reservation-form" class="space-y-6" action="https://docs.qq.com/form/page/DZXRIbXFIaEFXTVNi" method="POST" target="_blank">
-          <!-- 个人基本信息 -->
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <label for="name" class="block text-gray-700 font-medium mb-2">姓名 <span class="text-red-500">*</span></label>
-              <input type="text" id="name" name="01 姓名" required
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-custom outline-none"
-                placeholder="请输入您的姓名">
-            </div>
-            
-            <div>
-              <label for="phone" class="block text-gray-700 font-medium mb-2">联系电话 <span class="text-red-500">*</span></label>
-              <input type="tel" id="phone" name="02 联系电话" required
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-custom outline-none"
-                placeholder="请输入您的手机号码">
-            </div>
-          </div>
-          
-          <div>
-            <label for="age" class="block text-gray-700 font-medium mb-2">年龄</label>
-            <input type="number" id="age" name="03 年龄" min="12" max="35"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-custom outline-none"
-              placeholder="请输入您的年龄">
-          </div>
-          
-          <!-- 服务类型 -->
-<div>
-  <label for="service-type" class="block text-gray-700 font-medium mb-2">服务类型 <span class="text-red-500">*</span></label>
-  <select id="service-type" name="04 服务类型" required  <!-- 加空格，匹配收集表标题 -->
-    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-custom outline-none appearance-none bg-white"
-    style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg width=\"20\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z\" fill=\"%23333\"/></svg>'); background-repeat: no-repeat; background-position: right 10px center;">
-    <option value="">请选择服务类型</option>
-    <option value="心理健康支持">心理健康支持</option>
-    <option value="法律权益保障">法律权益保障</option>
-    <option value="成长与发展指导">成长与发展指导</option>
-    <option value="危机干预与个案转介">危机干预与个案转介</option>
-  </select>
-</div>
-
-<div>
-  <label for="description" class="block text-gray-700 font-medium mb-2">咨询描述</label>
-  <textarea id="description" name="05 咨询描述" rows="3"  <!-- 加空格，匹配收集表标题 -->
-    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-custom outline-none resize-none"
-    placeholder="请简要描述您需要咨询的问题（选填）"></textarea>
-</div>
-          
-          <!-- 提交按钮 -->
-          <div class="pt-4 flex flex-col sm:flex-row gap-4">
-            <button type="button" id="back-btn" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-6 rounded-lg transition-custom">
-              <i class="fa fa-arrow-left mr-2"></i> 返回
-            </button>
-            
-            <button type="submit" class="flex-1 bg-secondary hover:bg-teal-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-custom focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-opacity-50">
-              提交预约 <i class="fa fa-check ml-2"></i>
-            </button>
-          </div>
-        </form>
+        <!-- 嵌入表单大师的表单（你的iframe代码） -->
+        <iframe height="583" src="http://jsform3.com/web/formview/691d314175a03c61c8021a8b?_ed=1" 
+          allowTransparency="true" frameborder="0" style="width:100%; border:none"></iframe>
+        
+        <!-- 返回按钮 -->
+        <div class="pt-6 text-center">
+          <button type="button" id="back-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-6 rounded-lg transition-custom">
+            <i class="fa fa-arrow-left mr-2"></i> 返回
+          </button>
+        </div>
       </div>
     </div>
     
@@ -190,13 +142,26 @@
     </div>
   </div>
 
-  <!-- JavaScript（仅保留页面切换逻辑） -->
+  <!-- JavaScript（控制页面切换） -->
   <script>
     // 页面元素
     const introPage = document.getElementById('intro-page');
     const formPage = document.getElementById('form-page');
     const successPage = document.getElementById('success-page');
-    const reservationForm = document.getElementById('reservation-form');
+    
+    // 监听URL变化（表单提交后跳转回成功页）
+    function checkHash() {
+      if (window.location.hash === '#success') {
+        formPage.classList.add('hidden');
+        successPage.classList.remove('hidden');
+        window.location.hash = ''; // 清除哈希，避免刷新重复显示
+      }
+    }
+    
+    // 初始检查
+    checkHash();
+    // 监听哈希变化（表单提交后跳转触发）
+    window.addEventListener('hashchange', checkHash);
     
     // 按钮事件
     document.getElementById('start-btn').addEventListener('click', () => {
@@ -214,10 +179,8 @@
     document.getElementById('new-reservation-btn').addEventListener('click', () => {
       successPage.classList.add('hidden');
       formPage.classList.remove('hidden');
-      reservationForm.reset();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
 </body>
 </html>
-
